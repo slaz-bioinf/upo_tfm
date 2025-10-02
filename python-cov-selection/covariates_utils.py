@@ -316,6 +316,7 @@ def permutation_ft_sel(X_encoded, y_encoded, encoded_feature_names):
     
     # Base model: Logistic Regression with L2 regularization
     model = LogisticRegression(penalty='l2', solver='liblinear', max_iter=1000, random_state=42)
+
     
     # Fit model to data
     model.fit(X_encoded, y_encoded)
@@ -325,10 +326,7 @@ def permutation_ft_sel(X_encoded, y_encoded, encoded_feature_names):
     result = permutation_importance(model, X_encoded, y_encoded, n_repeats=10, random_state=42)
     
     # Create data.frame with features and their mean importance scores
-    ft_perm = pd.DataFrame({
-    "Covariate": encoded_feature_names,
-    "Importance": result.importances_mean,
-    })
+    ft_perm = pd.DataFrame({"Covariate": encoded_feature_names,"Importance": result.importances_mean,})
     
     # Sort by importance (descending)
     ft_perm = ft_perm.sort_values(by="Importance", ascending=False).reset_index(drop=True)
