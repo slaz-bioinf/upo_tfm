@@ -315,7 +315,7 @@ def permutation_ft_sel(X_encoded, y_encoded, encoded_feature_names):
         sorted by importance in descending order."""
     
     # Base model: Logistic Regression with L2 regularization
-    model = LogisticRegression(penalty='l2', solver='liblinear', max_iter=1000, random_state=42)
+    model = LogisticRegression(solver='liblinear', max_iter=1000, random_state=42)
 
     
     # Fit model to data
