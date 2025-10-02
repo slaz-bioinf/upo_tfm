@@ -98,7 +98,7 @@ def univariate_ft_sel(X_encoded, y_encoded, encoded_feature_names, k=30, method=
     
     # Display top 10 selected features
     pd.set_option('display.max_columns', None)
-    print("Top features selected by SelectKBest:")
+    print("Top 10 features selected by SelectKBest:")
     print(ft_univ_sorted.head(10))
 
     # Plot feature scores in descending order (elbow method visualization)
@@ -215,7 +215,6 @@ def trees_ft_importance(X_encoded, y_encoded, encoded_feature_names, algorithm, 
     
     # Fit model and print feature importances
     model.fit(X_encoded, y_encoded)
-    print(model.feature_importances_)
     
     # Create DataFrame with features and their importance scores
     ft_imp = pd.DataFrame({"Feature": encoded_feature_names, "Ft importance": model.feature_importances_})
@@ -228,7 +227,7 @@ def trees_ft_importance(X_encoded, y_encoded, encoded_feature_names, algorithm, 
 
     # Display top 10 features
     pd.set_option('display.max_columns', None)
-    print(f"Top features selected from {algorithm} model:")
+    print(f"Top 10 features selected from {algorithm} model:")
     print(ft_imp.head(10))
 
     # Plot elbow represtantion with importances and number of features
@@ -237,7 +236,7 @@ def trees_ft_importance(X_encoded, y_encoded, encoded_feature_names, algorithm, 
     plt.xlabel("Number of covariates")
     plt.ylabel("Feature importance")
     plt.title(f"Elbow method for top covariates selection: {algorithm}")
-    plt.plot(range(len(importances)), sorted(importances, reverse=True), marker="o")
+
     plt.show()
     
     return(ft_imp)
@@ -250,8 +249,8 @@ def lasso_ft_sel(X_encoded, y_encoded, encoded_feature_names, class_type = "bino
     Hyperparameter C is optimized with cross-validated grid search. 
     X_encoded: array with encoded values of covariates
     y_encoded: array with encoded values of response variable
-    encoded feature names: list of feature names
-    class_typee: Type of classification of response variable: "binomial" or "multinomial
+    encoded_feature_names: list of feature names
+    class_type: Type of classification of response variable: "binomial" or "multinomial
     
     The function returns a data.frame with selected covariates."""
     
@@ -290,13 +289,10 @@ def lasso_ft_sel(X_encoded, y_encoded, encoded_feature_names, class_type = "bino
     best_model = grid_search.best_estimator_
 
     # Coefficients vector (1D)
-    coef_vector = best_model.coef_[0]  # vector 1D con coeficientes
+    coef_vector = best_model.coef_[0]  # vector with coefficients
 
     # Create DataFrame with feature names and coefficients
-    ft_LASSO = pd.DataFrame({
-        'Covariate': encoded_feature_names,
-        'Coefficients': coef_vector
-    })
+    ft_LASSO = pd.DataFrame({'Covariate': encoded_feature_names,'Coefficients': coef_vector})
 
     # Select features with non-zero coefficients (selected by LASSO)
     ft_LASSO_sel = ft_LASSO[ft_LASSO['Coefficients'] != 0].sort_values(by='Coefficients', ascending=False)
