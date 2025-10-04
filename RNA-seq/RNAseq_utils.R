@@ -212,7 +212,7 @@ project<-function(){ # Create results folder
 }
 
 
-sof_biplot <- function(logcpm,targets,num_cols,title=""){
+fun_biplot <- function(logcpm,targets,num_cols,title=""){
   
   # PCA
   pca <- prcomp(t(logcpm), scale. = TRUE)
@@ -262,7 +262,7 @@ sof_biplot <- function(logcpm,targets,num_cols,title=""){
     labs(title = paste("Biplot", title))
 }
 
-sof_volcano <- function(topgenes,pvaluecutoff,logFCcutoff,title=""){
+fun_volcano <- function(topgenes,pvaluecutoff,logFCcutoff,title=""){
   
   p.value_cutoff <- pvaluecutoff
   logFC_cutoff <- logFCcutoff
@@ -322,7 +322,7 @@ fun_mapIds <- function(topgenes){
 
 
 
-sof_enrichment <- function(
+fun_enrichment <- function(
     topgenes,
     pvaluecutoff=0.01, # P-value (or adjusted p-value) threshold for DEG selection
     FCcutoff=1.5, # Fold-change threshold (absolute); will be converted to log2
@@ -492,7 +492,7 @@ sof_enrichment <- function(
   
 
 
-sof_venn <- function(genelist) {
+fun_venn <- function(genelist) {
   # Create a Venn diagram from a list of gene sets.
   # genelist must be a named list where each element is a vector of genes (End, RIF, UnI)
   

@@ -159,7 +159,7 @@ biplot_cols <- covariates
 biplot_bool_full <- colnames(targets) %in% biplot_cols
 
 pdf(paste0(name,"-biplot.pdf"), paper = "A4r")
-sof_biplot(v$E,targets,biplot_bool_full,analysis)
+fun_biplot(v$E,targets,biplot_bool_full,analysis)
 dev.off()
 
 # Define Cutoffs for DEGs
@@ -196,12 +196,12 @@ if (nrow(deg_sig1)>0){
 
   #Volcano
   pdf(paste0(name,"-volcano.pdf"), paper = "A4r")
-  sof_volcano(top_genes_1, p.value_cutoff,logFC_cutoff,title=colnames(contr1))
+  fun_volcano(top_genes_1, p.value_cutoff,logFC_cutoff,title=colnames(contr1))
   dev.off()
 
   #Enrichment
   pdf(paste0(name,"-Enrichment.pdf"), paper = "A4r")
-  enr1 <- sof_enrichment(top_genes_1, FCcutoff= 1.5, annotations = 10, output_name = name)
+  enr1 <- fun_enrichment(top_genes_1, FCcutoff= 1.5, annotations = 10, output_name = name)
   dev.off()
 
 }else{
@@ -241,12 +241,12 @@ if (nrow(deg_sig2)>0){
 
   #Volcano
   pdf(paste0(name,"-volcano.pdf"), paper = "A4r")
-  sof_volcano(top_genes_2, p.value_cutoff,logFC_cutoff,title=colnames(contr2))
+  fun_volcano(top_genes_2, p.value_cutoff,logFC_cutoff,title=colnames(contr2))
   dev.off()
   
   #Enrichment
   pdf(paste0(name,"-Enrichment.pdf"), paper = "A4r")
-  enr2 <- sof_enrichment(top_genes_2, FCcutoff= 1.5, annotations = 10, output_name = name)
+  enr2 <- fun_enrichment(top_genes_2, FCcutoff= 1.5, annotations = 10, output_name = name)
   dev.off()
   
 } else{
@@ -285,13 +285,13 @@ if (nrow(deg_sig3)>0){
   
   #Volcano
   pdf(paste0(name,"-volcano.pdf"), paper = "A4r")
-  sof_volcano(top_genes_3, p.value_cutoff,logFC_cutoff,title=colnames(contr3))
+  fun_volcano(top_genes_3, p.value_cutoff,logFC_cutoff,title=colnames(contr3))
   dev.off()
   
   #Enrichment
   
   pdf(paste0(name,"-Enrichment.pdf"), paper = "A4r")
-  enr3 <- sof_enrichment(top_genes_3, FCcutoff= 1.5, annotations = 10, output_name = name)
+  enr3 <- fun_enrichment(top_genes_3, FCcutoff= 1.5, annotations = 10, output_name = name)
   dev.off()
 } else{
   print(paste("No significant DEGs with p-value <", p.value_cutoff, 
@@ -355,7 +355,7 @@ biplot_cols <- covariates
 biplot_bool_full <- colnames(targets) %in% biplot_cols
 
 pdf(paste0(name,"-biplot.pdf"), paper = "A4r")
-sof_biplot(v$E,targets,biplot_bool_full,analysis)
+fun_biplot(v$E,targets,biplot_bool_full,analysis)
 dev.off()
 
 # Define Cutoffs for DEGs
@@ -392,12 +392,12 @@ if (nrow(deg_sig7)>0){
   
   #Volcano
   pdf(paste0(name,"-volcano.pdf"), paper = "A4r")
-  sof_volcano(top_genes_7, p.value_cutoff,logFC_cutoff,title=colnames(contr7))
+  fun_volcano(top_genes_7, p.value_cutoff,logFC_cutoff,title=colnames(contr7))
   dev.off()
   
   #Enrichment p-value 0.01
   pdf(paste0(name,"-Enrichment.pdf"), paper = "A4r")
-  enr7 <- sof_enrichment(top_genes_7, FCcutoff= 1.5, annotations = 10, output_name = name, padjusted = FALSE)
+  enr7 <- fun_enrichment(top_genes_7, FCcutoff= 1.5, annotations = 10, output_name = name, padjusted = FALSE)
   dev.off()
   
   
@@ -416,7 +416,7 @@ if (nrow(deg_sig7)>0){
 list_4 <- list(End = deg_sig2$symbol, RIF = deg_sig3$symbol, UnI = deg_sig1$symbol)
 
 # Print the Venn diagram
-sof_venn(list_4)
+fun_venn(list_4)
 
 # For each group, combine the enriched GO IDs from:
 # - Biological Process (BP)
@@ -433,11 +433,11 @@ list_func_3_KEGG <- list(End_KEGG = c(enr2$KEGG$ID, enr2$KEGG$ID, enr2$KEGG$ID),
 
 # Export Venn diagram of DEGs to PDF
 pdf(file.path(label, "Venn.pdf"), paper = "A4r")
-sof_venn(list_4)
+fun_venn(list_4)
 dev.off()
 
 # Export Venn diagram of GO terms to PDF
 pdf(file.path(label, "Venn-GO.pdf"), paper = "A4r")
-sof_venn(list_func_3_GO)
+fun_venn(list_func_3_GO)
 dev.off()
 
