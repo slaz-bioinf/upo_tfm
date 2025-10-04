@@ -28,10 +28,10 @@ from covariates_utils import remove_accents, replace_decimal
 metadata = "metadata_29-07.csv"
 
 # Read and store metadata
-raw_metadata = pd.read_csv(metadata, sep=";", index_col="Name",encoding = "ANSI") #ANSI is the encoding used by Excel2010
+raw_metadata = pd.read_csv(metadata, sep=";", index_col="Name", encoding = "ANSI") #ANSI is the encoding used by Excel2010
 
 # Process accents in values, columns and index
-raw_metadata = raw_metadata.applymap(remove_accents)
+raw_metadata = raw_metadata.map(remove_accents)
 raw_metadata.columns = raw_metadata.columns.map(remove_accents)
 raw_metadata.index = raw_metadata.index.map(remove_accents)
 
@@ -42,7 +42,7 @@ raw_metadata = raw_metadata.map(replace_decimal)
 for col, dtype in raw_metadata.dtypes.items():
     print(f"{col}: {dtype}")
     
-# Define factor covariates
+# Define covariates numerical covariates that must be considered as categories
 factor_cols = ["Menstrual Cycle Phase"]
 
 # Transform 'object' type columns to 'numeric' 
@@ -230,7 +230,7 @@ if y2.dtype == 'category':
 
 ###### Univariate feature selection SelectKBest #######
 from covariates_utils import univariate_ft_sel
-ft_univ2 = univariate_ft_sel(X_encoded, y_encoded, encoded_feature_names, k=69)
+ft_univ2 = univariate_ft_sel(X_encoded, y_encoded, encoded_feature_names, k=100)
 
 
 ###### Perform RCEFV wrapped selection ####### Recursive feature elimination with cross-validation
@@ -258,7 +258,7 @@ methods_selection2 = [ft_univ2[0:18],ft_rfcev2,ft_imp_RF2[0:4],ft_lasso2,ft_perm
 
 # Create a dictionary of covariates and the number of methods that selected them
 cov_count2 = dict()
-for col in X_transformed.columns:
+for col in X_final.columns:
     cov_count2[col]=0
     for df in methods_selection2:
         if col in df["Covariate"].values:
@@ -314,7 +314,7 @@ methods_selection4 = [ft_univ4[0:16],ft_rfcev4,ft_imp_RF4[0:15],ft_lasso4,ft_per
 
 # Create a dictionary of covariates and the number of methods that selected them
 cov_count4 = dict()
-for col in X_transformed.columns:
+for col in X_final.columns:
     cov_count4[col]=0
     for df in methods_selection4:
         if col in df["Covariate"].values:
