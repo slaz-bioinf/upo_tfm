@@ -294,10 +294,6 @@ fun_volcano <- function(topgenes,pvaluecutoff,logFCcutoff,title=""){
   print(vplot)
   
 }
-# topgenes <- top_genes_1
-# FCcutoff <- 1.5
-# pvaluecutoff <- 0.01
-# annotations <- 10
 
 fun_mapIds <- function(topgenes){
   # Add a new column "symbol" using the row names of the table
